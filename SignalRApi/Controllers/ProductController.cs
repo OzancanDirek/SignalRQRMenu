@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SignalR.BusinessLayer.Abstract;
+using SignalR.DataAccessLayer.Concrete;
 using SignalR.DtoLayer.ProductDto;
 using SignalR.EntityLayer.Entities;
 
@@ -69,6 +71,23 @@ namespace SignalRApi.Controllers
                 ProductStatus = updateProductDto.ProductStatus
             });
             return Ok("Ürün Bilgisi güncellendi");
+        }
+
+        [HttpGet("GetProductsWithCategories")]
+        public IActionResult GetProductsWithCategories()
+        {
+            var context = new SignalRContext();
+            var values = context.Products.Include(x => x.Category).Select(y => new ResultProductWithCategory
+            {
+                Description = y.Description,
+                Price = y.Price,
+                ImageUrl = y.ImageUrl,
+                ProductStatus = y.ProductStatus,
+                ProductName = y.ProductName,
+                ProductId = y.ProductId,
+                CategoryName = y.Category.CategoryName
+            });
+            return Ok(values.ToList());
         }
     }
 }
