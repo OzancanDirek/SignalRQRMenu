@@ -1,0 +1,68 @@
+﻿@model UpdateProductDto
+
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Ürün İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header">
+                                <div class="card-title">Mevcut ürünü güncellemek için Aşağıdaki Formu Doldurabilirsiniz.</div>
+                            </div>
+                            <div class="card-sub">
+                                Ürün ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for ="ProductId" />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ProductName">Ürünün Adını giriniz</label>
+                                <input asp-for="ProductName" type="text" class="form-control" placeholder="Yeni ürün adını giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ProductName">Ürünün Fiyatını giriniz</label>
+                                <input asp-for="Price" type="text" class="form-control" placeholder="Yeni ürün fiyatını giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ProductName">Ürünün Görselini giriniz</label>
+                                <input asp-for="ImageUrl" type="text" class="form-control" placeholder="Yeni ürün fiyatını giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ProductName">Ürünün Kategorisini seçiniz</label>
+                                @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Description">Ürünün Açıklamasını giriniz</label>
+                                <input asp-for="Description" type="text" class="form-control" placeholder="Yeni ürün fiyatını giriniz">
+
+                            </div>
+                        </div>
+
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-primary">Ürünü Güncelle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

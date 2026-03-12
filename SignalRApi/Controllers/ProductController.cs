@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SignalR.BusinessLayer.Abstract;
@@ -38,7 +37,8 @@ namespace SignalRApi.Controllers
                 Description = createProductDto.Description,
                 Price = createProductDto.Price,
                 ImageUrl = createProductDto.ImageUrl,
-                ProductStatus = createProductDto.ProductStatus
+                ProductStatus = createProductDto.ProductStatus,
+                CategoryId = createProductDto.CategoryId
             });
             return Ok("Ürün Bilgisi eklendi");
         }
@@ -51,7 +51,7 @@ namespace SignalRApi.Controllers
             return Ok("Ürün Bilgisi silindi");
         }
 
-        [HttpGet("GetProduct")]
+        [HttpGet("{id}")]
         public IActionResult GetProduct(int id)
         {
             var value = _ProductService.TGetById(id);
@@ -68,7 +68,8 @@ namespace SignalRApi.Controllers
                 Description = updateProductDto.Description,
                 Price = updateProductDto.Price,
                 ImageUrl = updateProductDto.ImageUrl,
-                ProductStatus = updateProductDto.ProductStatus
+                ProductStatus = updateProductDto.ProductStatus,
+                CategoryId = updateProductDto.CategoryId
             });
             return Ok("Ürün Bilgisi güncellendi");
         }
