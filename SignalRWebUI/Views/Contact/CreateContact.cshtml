@@ -1,0 +1,58 @@
+﻿@model CreateContactDto
+@{
+    ViewData["Title"] = "CreateContact";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">İletişim İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header">
+                                <div class="card-title">Yeni İletişim Alanı Eklemek için Aşağıdaki Formu Doldurabilirsiniz.</div>
+                            </div>
+                            <div class="card-sub">
+                                İletişim alanıyla ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Title">Konum</label>
+                                <input asp-for="Location" type="text" class="form-control" placeholder="Yeni konumu giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ImageUrl">Telefon Numarası</label>
+                                <input asp-for="Phone" type="text" class="form-control" placeholder="Telefon numarası bilginizi giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Description">Mail</label>
+                                <input asp-for="Mail" type="text" class="form-control" placeholder="Mail bilginizi giriniz">
+                            </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Description">Açıklama</label>
+                                <input asp-for="FooterDescription" type="text" class="form-control" placeholder="Açıklama bilgisini giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-primary">İletişim Alanı Ekle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

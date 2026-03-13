@@ -1,0 +1,59 @@
+﻿@model UpdateDiscountDto
+@{
+    ViewData["Title"] = "UpdateDiscount";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">İndirimli Ürün İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header">
+                                <div class="card-title">İndirimli Ürün Güncellemek için Aşağıdaki Formu Doldurabilirsiniz.</div>
+                            </div>
+                            <div class="card-sub">
+                                İndirimle ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="DiscountId" />
+                                <label for="Title">Ürün Adını giriniz</label>
+                                <input asp-for="Title" type="text" class="form-control" placeholder="Yeni ürün adını giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Amount">Ürün İndirim Oranını</label>
+                                <input asp-for="Amount" type="text" class="form-control" placeholder="Ürünün indirim oranını giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ImageUrl">Ürün Görselini giriniz</label>
+                                <input asp-for="ImageUrl" type="text" class="form-control" placeholder="Ürünün görselinin linkini giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Description">Ürün Açıklamasını giriniz</label>
+                                <input asp-for="Description" type="text" class="form-control" placeholder="Ürünün görselinin linkini giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-primary">İndirimli Ürünü Güncelle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

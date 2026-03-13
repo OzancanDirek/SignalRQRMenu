@@ -1,0 +1,61 @@
+﻿@model UpdateBookingDto
+@{
+    ViewData["Title"] = "UpdateBooking";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Randevu İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Randevu Alanını Güncellemek için Aşağıdaki Formu Doldurabilirsiniz.</div>
+                            <div class="card-sub">
+                                Randevu alanıyla ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <input type="hidden" asp-for="BookingId" />  @* ← eklendi *@
+                            <div class="form-group">
+                                <label for="Name">Adınızı giriniz</label>
+                                <input asp-for="Name" type="text" class="form-control" placeholder="Randevu sahibinin adını giriniz">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Phone">Telefon Numarası</label>
+                                <input asp-for="Phone" type="text" class="form-control" placeholder="Aranmasını istediğiniz telefon numarasını giriniz">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Mail">Mail</label>
+                                <input asp-for="Mail" type="text" class="form-control" placeholder="Bilgilerin iletileceği mail adresini giriniz">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="PersonCount">Kişi Sayısı</label>
+                                <select asp-for="PersonCount" class="form-control">
+                                    <option value="">Kaç kişilik randevu oluşturmak istiyorsunuz</option>
+                                    <option value="1">1 Kişi</option>
+                                    <option value="2">2 Kişi</option>
+                                    <option value="3">3 Kişi</option>
+                                    <option value="4">4 Kişi</option>
+                                    <option value="5">5 Kişi</option>
+                                    <option value="6">6 Kişi</option>
+                                    <option value="7">7+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-primary">Randevuyu Güncelle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
