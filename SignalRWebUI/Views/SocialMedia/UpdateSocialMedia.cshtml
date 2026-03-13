@@ -1,0 +1,52 @@
+﻿@model UpdateSocialMediaDto
+@{
+    ViewData["Title"] = "UpdateSocialMedia";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Sosyal Medya İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header">
+                                <div class="card-title">Yeni Sosyal Medya Eklemek için Aşağıdaki Formu Doldurabilirsiniz.</div>
+                            </div>
+                            <div class="card-sub">
+                                Sosyal Medya ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="SocialMediaId" />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Title">Başlık giriniz</label>
+                                <input asp-for="Title" type="text" class="form-control" placeholder="Yeni Başlığı adını giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Icon">Icon giriniz</label>
+                                <input asp-for="Icon" type="text" class="form-control" placeholder="Yeni iconu giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Url">Link giriniz</label>
+                                <input asp-for="Url" type="text" class="form-control" placeholder="Yeni Url'i giriniz">
+                            </div>
+                        </div>
+
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-primary">Sosyal Medya Hesabını Güncelle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
