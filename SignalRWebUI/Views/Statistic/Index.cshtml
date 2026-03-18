@@ -3,324 +3,380 @@
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
-<div class="main-panel">
-    <div class="content">
-        <div class="container-fluid">
-            <h4 class="page-title">Dashboard</h4>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card card-stats card-warning">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-users"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Visitors</p>
-                                        <h4 class="card-title">1,294</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-success">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-bar-chart"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Sales</p>
-                                        <h4 class="card-title">$ 1,345</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-danger">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-newspaper-o"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Subscribers</p>
-                                        <h4 class="card-title">1303</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-primary">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-check-circle"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Order</p>
-                                        <h4 class="card-title">576</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card card-stats card-warning">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-users"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Visitors</p>
-                                        <h4 class="card-title">1,294</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-success">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-bar-chart"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Sales</p>
-                                        <h4 class="card-title">$ 1,345</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-danger">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-newspaper-o"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Subscribers</p>
-                                        <h4 class="card-title">1303</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-primary">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-check-circle"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Order</p>
-                                        <h4 class="card-title">576</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;700;800&display=swap');
 
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card card-stats card-warning">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-users"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Visitors</p>
-                                        <h4 class="card-title">1,294</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-success">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-bar-chart"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Sales</p>
-                                        <h4 class="card-title">$ 1,345</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-danger">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-newspaper-o"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Subscribers</p>
-                                        <h4 class="card-title">1303</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-primary">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-check-circle"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Order</p>
-                                        <h4 class="card-title">576</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    .stat-dashboard {
+        font-family: 'Syne', sans-serif;
+        padding: 24px;
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card card-stats card-warning">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-users"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Visitors</p>
-                                        <h4 class="card-title">1,294</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-success">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-bar-chart"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Sales</p>
-                                        <h4 class="card-title">$ 1,345</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-danger">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-newspaper-o"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Subscribers</p>
-                                        <h4 class="card-title">1303</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-stats card-primary">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="icon-big text-center">
-                                        <i class="la la-check-circle"></i>
-                                    </div>
-                                </div>
-                                <div class="col-7 d-flex align-items-center">
-                                    <div class="numbers">
-                                        <p class="card-category">Order</p>
-                                        <h4 class="card-title">576</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    .stat-page-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: #1a1a1a;
+        margin: 0 0 8px 0;
+        font-family: 'Syne', sans-serif;
+    }
+
+    .stat-status-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 28px;
+    }
+
+    .stat-conn-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #f0faf5;
+        border: 1px solid #b6e8cf;
+        border-radius: 20px;
+        padding: 4px 12px 4px 10px;
+        font-size: 11px;
+        color: #0F6E56;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stat-pulse {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #1D9E75;
+        animation: stat-pulse 1.8s infinite;
+        flex-shrink: 0;
+    }
+
+    @@keyframes stat-pulse {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.3;
+            transform: scale(0.6);
+        }
+    }
+
+    .stat-conn-state {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: #bbb;
+    }
+
+    .stat-section-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: #aaa;
+        margin: 0 0 10px 2px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .stat-section-label::after {
+            content: '';
+            flex: 1;
+            height: 0.5px;
+            background: #e5e5e5;
+        }
+
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 28px;
+    }
+
+    .stat-card {
+        position: relative;
+        border-radius: 14px;
+        padding: 20px 20px 18px;
+        border: 1px solid #ebebeb;
+        background: #ffffff;
+        overflow: hidden;
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            border-radius: 14px 14px 0 0;
+        }
+
+        .stat-card.c-warn::before {
+            background: #EF9F27;
+        }
+
+        .stat-card.c-success::before {
+            background: #1D9E75;
+        }
+
+        .stat-card.c-danger::before {
+            background: #E24B4A;
+        }
+
+        .stat-card.c-info::before {
+            background: #378ADD;
+        }
+
+        .stat-card.c-purple::before {
+            background: #7F77DD;
+        }
+
+        .stat-card.c-teal::before {
+            background: #0F6E56;
+        }
+
+        .stat-card.c-coral::before {
+            background: #D85A30;
+        }
+
+        .stat-card.c-pink::before {
+            background: #D4537E;
+        }
+
+    .stat-card-icon {
+        font-size: 16px;
+        margin-bottom: 14px;
+        opacity: 0.35;
+        line-height: 1;
+    }
+
+    .stat-card-label {
+        font-size: 11px;
+        font-weight: 400;
+        color: #aaa;
+        letter-spacing: 0.02em;
+        margin-bottom: 6px;
+        line-height: 1.3;
+    }
+
+    .stat-card-value {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 24px;
+        font-weight: 600;
+        color: #1a1a1a;
+        line-height: 1.1;
+        display: flex;
+        align-items: baseline;
+        gap: 3px;
+        flex-wrap: wrap;
+    }
+
+        .stat-card-value.text-val {
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Syne', sans-serif;
+            color: #2a2a2a;
+        }
+
+    .stat-unit {
+        font-size: 12px;
+        font-weight: 400;
+        color: #ccc;
+        font-family: 'Syne', sans-serif;
+    }
+
+    @@media (max-width: 992px) {
+        .stat-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .stat-grid {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .stat-dashboard {
+            padding: 16px;
+        }
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:7105/SignalRHub")
+            .build();
+
+        $("#connstatus").text(connection.state);
+
+        connection.start()
+            .then(function () {
+                $("#connstatus").text(connection.state);
+                setInterval(() => {
+                    connection.invoke("SendStatistic");
+                }, 1000);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+
+        connection.on("ReceiveCategoryCount", (value) => { $("#categorycount").text(value); });
+        connection.on("ReceiveProductCount", (value2) => { $("#productcount").text(value2); });
+        connection.on("ReceiveActiveCategoryCount", (value3) => { $("#activeCategoryCount").text(value3); });
+        connection.on("ReceivePassiveCategoryCount", (value4) => { $("#productcountbycategorynamehamburger").text(value4); });
+        connection.on("ReceiveProductCountByCategoryNameHamburger", (value5) => { $("#passiveCategoryCount").text(value5); });
+        connection.on("ReceiveProductCountByCategoryDrink", (value6) => { $("#receiveproductcountbycategorydrink").text(value6); });
+        connection.on("ReceiveProductPriceAvg", (value7) => { $("#receiveproductpriceAvg").text(value7); });
+        connection.on("ReceiveProductNameByMaxPrice", (value8) => { $("#receiveproductnamebymaxprice").text(value8); });
+        connection.on("ReceiveProductNameByMinPrice", (value9) => { $("#receiveproductnamebyminprice").text(value9); });
+        connection.on("ReceiveProductAvgPriceByHamburger", (value10) => { $("#receiveproductavgpricebyhamburger").text(value10); });
+        connection.on("ReceiveTotalOrderCount", (value11) => { $("#receivetotalordercount").text(value11); });
+        connection.on("ReceiveActiveOrderCount", (value12) => { $("#receiveactiveordercount").text(value12); });
+        connection.on("ReceiveLastOrderPrice", (value13) => { $("#receivelastorderprice").text(value13); });
+        connection.on("ReceiveTotalMoneyCaseAmout", (value14) => { $("#receivetotalmoneycaseamout").text(value14); });
+        connection.on("ReceiveTodayTotalPrice", (value15) => { $("#receivetodaytotalprice").text(value15); });
+        connection.on("ReceiveTableCount", (value16) => { $("#receivetablecount").text(value16); });
+    });
+</script>
+
+<div class="stat-dashboard">
+
+    <h4 class="stat-page-title">Anlık İstatistik Sayfası</h4>
+
+    <div class="stat-status-bar">
+        <span class="stat-conn-badge">
+            <span class="stat-pulse"></span>
+            SignalR bağlı
+        </span>
+        <span class="stat-conn-state" id="connstatus"></span>
+    </div>
+
+    <!-- Kategori & Ürün -->
+    <div class="stat-section-label">Kategori &amp; Ürün</div>
+    <div class="stat-grid">
+        <div class="stat-card c-warn">
+            <div class="stat-card-icon">🗃️</div>
+            <div class="stat-card-label">Kategori Sayısı</div>
+            <div class="stat-card-value"><span id="categorycount">—</span></div>
+        </div>
+        <div class="stat-card c-success">
+            <div class="stat-card-icon">🍽️</div>
+            <div class="stat-card-label">Ürün Sayısı</div>
+            <div class="stat-card-value"><span id="productcount">—</span></div>
+        </div>
+        <div class="stat-card c-info">
+            <div class="stat-card-icon">✅</div>
+            <div class="stat-card-label">Aktif Kategori</div>
+            <div class="stat-card-value"><span id="activeCategoryCount">—</span></div>
+        </div>
+        <div class="stat-card c-danger">
+            <div class="stat-card-icon">⛔</div>
+            <div class="stat-card-label">Pasif Kategori</div>
+            <div class="stat-card-value"><span id="passiveCategoryCount">—</span></div>
         </div>
     </div>
+
+    <!-- Fiyat & Ürün Detayı -->
+    <div class="stat-section-label">Fiyat &amp; Ürün Detayı</div>
+    <div class="stat-grid">
+        <div class="stat-card c-warn">
+            <div class="stat-card-icon">🍔</div>
+            <div class="stat-card-label">Hamburger Kategorisi</div>
+            <div class="stat-card-value"><span id="productcountbycategorynamehamburger"></span></div>
+        </div>
+        <div class="stat-card c-teal">
+            <div class="stat-card-icon">☕︎</div>
+            <div class="stat-card-label">İçecek Kategorisi</div>
+            <div class="stat-card-value"><span id="receiveproductcountbycategorydrink">—</span></div>
+        </div>
+        <div class="stat-card c-purple">
+            <div class="stat-card-icon">⚖️</div>
+            <div class="stat-card-label">Ortalama Fiyat</div>
+            <div class="stat-card-value">
+                <span id="receiveproductpriceAvg">—</span>
+                <span class="stat-unit">₺</span>
+            </div>
+        </div>
+        <div class="stat-card c-info">
+            <div class="stat-card-icon">⬆️</div>
+            <div class="stat-card-label">En Pahalı Ürün</div>
+            <div class="stat-card-value text-val"><span id="receiveproductnamebymaxprice">—</span></div>
+        </div>
+    </div>
+
+    <!-- Sipariş -->
+    <div class="stat-section-label">Sipariş</div>
+    <div class="stat-grid">
+        <div class="stat-card c-coral">
+            <div class="stat-card-icon">↓</div>
+            <div class="stat-card-label">En Ucuz Ürün</div>
+            <div class="stat-card-value text-val"><span id="receiveproductnamebyminprice">—</span></div>
+        </div>
+        <div class="stat-card c-success">
+            <div class="stat-card-icon">🍔</div>
+            <div class="stat-card-label">Ort. Hamburger Fiyatı</div>
+            <div class="stat-card-value">
+                <span id="receiveproductavgpricebyhamburger">—</span>
+                <span class="stat-unit">₺</span>
+            </div>
+        </div>
+        <div class="stat-card c-danger">
+            <div class="stat-card-icon">🧾</div>
+            <div class="stat-card-label">Toplam Sipariş</div>
+            <div class="stat-card-value"><span id="receivetotalordercount">—</span></div>
+        </div>
+        <div class="stat-card c-warn">
+            <div class="stat-card-icon">✔️</div>
+            <div class="stat-card-label">Aktif Sipariş Sayısı</div>
+            <div class="stat-card-value"><span id="receiveactiveordercount">—</span></div>
+        </div>
+    </div>
+
+    <!-- Kasa & Masa -->
+    <div class="stat-section-label">Kasa &amp; Masa</div>
+    <div class="stat-grid">
+        <div class="stat-card c-info">
+            <div class="stat-card-icon">🎯</div>
+            <div class="stat-card-label">Son Sipariş Ücreti</div>
+            <div class="stat-card-value">
+                <span id="receivelastorderprice">—</span>
+                <span class="stat-unit">₺</span>
+            </div>
+        </div>
+        <div class="stat-card c-success">
+            <div class="stat-card-icon">💰</div>
+            <div class="stat-card-label">Kasadaki Toplam Tutar</div>
+            <div class="stat-card-value">
+                <span id="receivetotalmoneycaseamout">—</span>
+                <span class="stat-unit">₺</span>
+            </div>
+        </div>
+        <div class="stat-card c-purple">
+            <div class="stat-card-icon">💸</div>
+            <div class="stat-card-label">Bugünkü Kazanç</div>
+            <div class="stat-card-value" id="receivetodaytotalprice"><span class="stat-unit">₺</span></div>
+        </div>
+        <div class="stat-card c-coral">
+            <div class="stat-card-icon">𓊯</div>
+            <div class="stat-card-label">Masa Sayısı</div>
+            <div class="stat-card-value"><span id="receivetablecount">—</span></div>
+        </div>
+    </div>
+
+</div>
