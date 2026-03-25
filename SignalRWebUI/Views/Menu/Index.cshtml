@@ -1,0 +1,135 @@
+﻿@model List<ResultProductDto>
+@{
+    Layout = null;
+}
+
+@functions {
+    string GetCategoryClass(string categoryName)
+    {
+        return categoryName?.ToLower() switch
+        {
+            "hamburger" => "burger",
+            "pizza" => "pizza",
+            "makarna" => "pasta",
+            "içecek" => "icecek",
+            _ => ""
+        };
+    }
+}
+
+<!DOCTYPE html>
+<html>
+
+@await Component.InvokeAsync("_UILayoutHeadComponentPartial")
+
+<body class="sub_page">
+
+    @await Component.InvokeAsync("_MenuNavbarComponentPartial")
+
+    <section class="food_section layout_padding">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>Our Menu</h2>
+            </div>
+
+            <!-- FILTER MENU -->
+            <ul class="filters_menu">
+                <li class="active" data-filter="*">Hepsi</li>
+                <li data-filter=".burger">Burger</li>
+                <li data-filter=".pizza">Pizza</li>
+                <li data-filter=".pasta">Makarna</li>
+                <li data-filter=".icecek">İçecek</li>
+            </ul>
+
+            <!-- PRODUCTS -->
+            <div class="filters-content">
+                <div class="row grid">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-sm-6 col-lg-4 all @GetCategoryClass(item.CategoryName)">
+                            <div class="box">
+                                <div>
+                                    <div class="img-box">
+                                        <img src="@item.ImageUrl" alt="@item.ProductName">
+                                    </div>
+
+                                    <div class="detail-box">
+                                        <h5>@item.ProductName</h5>
+
+                                        <p>@item.Description</p>
+
+                                        <div class="options">
+                                            <h6>@item.Price ₺</h6>
+
+                                            <a href="#" onclick="showproductid(@item.ProductId)">
+                                                🛒
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <div class="btn-box">
+                <a href="">Daha Fazlasını Görüntüle</a>
+            </div>
+
+        </div>
+    </section>
+
+    @await Component.InvokeAsync("_UILayoutFooterComponentPartial")
+
+    @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
+
+    <script> function showproductid(value){
+        var id = value;
+        $.ajax({
+            type:'post',
+            data:{item:id},
+            contentType: 'json',
+            success: function(){
+        swal("Seçilen ürün id:!"+ id , "Seçiminizi Yaptınız!", "success");
+            }
+        });
+    }
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        const filterButtons = document.querySelectorAll('.filters_menu li');
+        const items = document.querySelectorAll('.grid .col-sm-6');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+
+                // aktif class
+                filterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.getAttribute('data-filter');
+
+                items.forEach(item => {
+
+                    if (filter === "*") {
+                        item.style.display = "block";
+                    } else {
+                        if (item.classList.contains(filter.substring(1))) {
+                            item.style.display = "block";
+                        } else {
+                            item.style.display = "none";
+                        }
+                    }
+
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
