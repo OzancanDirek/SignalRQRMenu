@@ -1,0 +1,539 @@
+﻿@model List<ResultBasketDto>
+@{
+    Layout = null;
+    int count = 0;
+}
+
+<!DOCTYPE html>
+<html>
+
+@await Component.InvokeAsync("_UILayoutHeadComponentPartial")
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+    :root {
+        --bg: #0e0e0e;
+        --surface: #161616;
+        --surface2: #1e1e1e;
+        --border: rgba(255,255,255,0.07);
+        --gold: #c9a84c;
+        --gold-dim: rgba(201,168,76,0.12);
+        --text: #f0ede8;
+        --muted: #6b6b6b;
+        --danger: #c0392b;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body.sub_page {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 400;
+        min-height: 100vh;
+    }
+
+    /* Breadcrumb */
+    .basket-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 18px 0 32px;
+        font-size: 13px;
+        color: var(--muted);
+        letter-spacing: 0.03em;
+    }
+
+        .basket-breadcrumb a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+            .basket-breadcrumb a:hover {
+                color: var(--gold);
+            }
+
+        .basket-breadcrumb .sep {
+            color: var(--border);
+        }
+
+        .basket-breadcrumb .active {
+            color: var(--text);
+        }
+
+    /* Page title */
+    .basket-page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 36px;
+        color: var(--text);
+    }
+
+        .basket-page-title span {
+            color: var(--gold);
+        }
+
+    /* Layout */
+    .basket-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 32px;
+        align-items: start;
+        padding-bottom: 80px;
+    }
+
+    @@media (max-width: 992px) {
+        .basket-wrapper {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Table */
+    .basket-table-wrap {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .basket-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .basket-table thead tr {
+            background: var(--surface2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .basket-table thead th {
+            padding: 16px 20px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-align: left;
+        }
+
+            .basket-table thead th:first-child,
+            .basket-table thead th:last-child {
+                text-align: center;
+            }
+
+        .basket-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background .15s;
+            animation: rowIn .3s ease both;
+        }
+
+            .basket-table tbody tr:last-child {
+                border-bottom: none;
+            }
+
+            .basket-table tbody tr:hover {
+                background: rgba(255,255,255,0.02);
+            }
+
+        .basket-table td {
+            padding: 18px 20px;
+            font-size: 14px;
+            color: var(--text);
+            vertical-align: middle;
+            text-align: left;
+        }
+
+            .basket-table td:first-child,
+            .basket-table td:last-child {
+                text-align: center;
+            }
+
+    .td-index {
+        color: var(--muted);
+        font-size: 12px;
+        width: 40px;
+    }
+
+    .td-name {
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .td-price {
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    .td-total {
+        font-family: 'Playfair Display', serif;
+        font-size: 16px;
+        color: var(--gold);
+        font-weight: 500;
+    }
+
+    .qty-badge {
+        display: inline-block;
+        background: var(--gold-dim);
+        color: var(--gold);
+        border: 1px solid rgba(201,168,76,0.25);
+        border-radius: 6px;
+        padding: 3px 12px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .btn-delete {
+        background: transparent;
+        border: 1px solid rgba(192,57,43,0.35);
+        color: var(--danger);
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background .2s, border-color .2s;
+        font-size: 12px;
+    }
+
+        .btn-delete:hover {
+            background: rgba(192,57,43,0.12);
+            border-color: var(--danger);
+        }
+
+    /* Empty state */
+    .basket-empty {
+        padding: 64px 20px;
+        text-align: center;
+        color: var(--muted);
+    }
+
+        .basket-empty .empty-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+            opacity: .4;
+        }
+
+        .basket-empty p {
+            font-size: 14px;
+        }
+
+    /* Sidebar */
+    .basket-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        animation: sideIn .4s .1s ease both;
+    }
+
+    /* Coupon card */
+    .coupon-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+    }
+
+        .coupon-card label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+    .coupon-row {
+        display: flex;
+        gap: 10px;
+    }
+
+        .coupon-row input[type="text"] {
+            flex: 1;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            padding: 10px 14px;
+            outline: none;
+            transition: border-color .2s;
+        }
+
+            .coupon-row input[type="text"]::placeholder {
+                color: var(--muted);
+            }
+
+            .coupon-row input[type="text"]:focus {
+                border-color: var(--gold);
+            }
+
+        .coupon-row a {
+            background: var(--gold);
+            color: #0e0e0e;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: opacity .2s;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+            .coupon-row a:hover {
+                opacity: .85;
+            }
+
+    /* Summary card */
+    .summary-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 28px;
+    }
+
+    .summary-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 20px;
+        color: var(--text);
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        font-size: 14px;
+    }
+
+        .summary-row .lbl {
+            color: var(--muted);
+        }
+
+        .summary-row .val {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+            .summary-row .val.gold {
+                color: var(--gold);
+            }
+
+    .summary-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 20px 0;
+    }
+
+    .summary-total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 24px;
+    }
+
+        .summary-total-row .tot-lbl {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            color: var(--text);
+        }
+
+        .summary-total-row .tot-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--gold);
+        }
+
+    #btnchecked {
+        width: 100%;
+        background: var(--gold);
+        color: #0e0e0e;
+        border: none;
+        border-radius: 10px;
+        padding: 15px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        cursor: pointer;
+        transition: opacity .2s, transform .15s;
+    }
+
+        #btnchecked:hover {
+            opacity: .88;
+            transform: translateY(-1px);
+        }
+
+        #btnchecked:active {
+            transform: translateY(0);
+        }
+
+    @@keyframes rowIn {
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .basket-table tbody tr:nth-child(1) {
+        animation-delay: .04s;
+    }
+
+    .basket-table tbody tr:nth-child(2) {
+        animation-delay: .08s;
+    }
+
+    .basket-table tbody tr:nth-child(3) {
+        animation-delay: .12s;
+    }
+
+    .basket-table tbody tr:nth-child(4) {
+        animation-delay: .16s;
+    }
+
+    .basket-table tbody tr:nth-child(5) {
+        animation-delay: .20s;
+    }
+
+    .basket-table tbody tr:nth-child(6) {
+        animation-delay: .24s;
+    }
+
+    @@keyframes sideIn {
+        from {
+            opacity: 0;
+            transform: translateX(12px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>
+
+<body class="sub_page">
+
+    @await Component.InvokeAsync("_MenuNavbarComponentPartial")
+
+    <div class="container-fluid px-xl-5 py-4">
+
+        <nav class="basket-breadcrumb">
+            <a href="/Default/Index/">Ana Sayfa</a>
+            <span class="sep">›</span>
+            <a href="/Menu/Index/">Menü</a>
+            <span class="sep">›</span>
+            <span class="active">Sepetiniz</span>
+        </nav>
+
+        <h1 class="basket-page-title">Siparişinizi <span>İnceleyin</span></h1>
+
+        <div class="basket-wrapper">
+
+            <div class="basket-table-wrap">
+                @if (Model != null && Model.Count > 0)
+                {
+                    <table class="basket-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ürün Adı</th>
+                                <th>Adet</th>
+                                <th>Fiyat</th>
+                                <th>Toplam</th>
+                                <th>Sil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <td class="td-index">@count</td>
+                                    <td class="td-name">@item.ProductName</td>
+                                    <td class="td-qty"><span class="qty-badge">@item.Count</span></td>
+                                    <td class="td-price">@item.Price ₺</td>
+                                    <td class="td-total">@item.TotalPrice ₺</td>
+                                    <td>
+                                        <button data-basketid="@item.BasketId" class="btn-delete">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="basket-empty">
+                        <div class="empty-icon">🛒</div>
+                        <p>Sepetiniz henüz boş.</p>
+                    </div>
+                }
+            </div>
+
+            <div class="basket-sidebar">
+
+                <div class="coupon-card">
+                    <label>Kupon Kodu</label>
+                    <div class="coupon-row">
+                        <input type="text" id="couponcode" placeholder="Kodunuzu girin" />
+                        <a id="btncouponcode">Uygula</a>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-title">Sepet Özeti</div>
+
+                    <div id="container">
+                        <div class="summary-row">
+                            <span class="lbl">Ara Toplam</span>
+                            <span class="val"><span id="totalprice">200</span> ₺</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="lbl">KDV</span>
+                            <span class="val gold"><span id="kdv">20</span> ₺</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-total-row">
+                        <span class="tot-lbl">Genel Toplam</span>
+                        <span class="tot-val"><span id="totalpricewithkdv">220</span> ₺</span>
+                    </div>
+
+                    <button id="btnchecked">Sipariş Ver</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @await Component.InvokeAsync("_UILayoutFooterComponentPartial")
+    @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
+
+</body>
+</html>
