@@ -1,6 +1,7 @@
 ﻿@model List<ResultProductDto>
 @{
     Layout = null;
+
 }
 
 @functions {
@@ -47,6 +48,8 @@
 
                     @foreach (var item in Model)
                     {
+                        
+                        
                         <div class="col-sm-6 col-lg-4 all @GetCategoryClass(item.CategoryName)">
                             <div class="box">
                                 <div>
@@ -56,7 +59,7 @@
 
                                     <div class="detail-box">
                                         <h5>@item.ProductName</h5>
-
+                                        
                                         <p>@item.Description</p>
 
                                         <div class="options">
@@ -87,17 +90,22 @@
 
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
 
-    <script> function showproductid(value){
-        var id = value;
-        $.ajax({
-            type:'post',
-            data:{item:id},
-            contentType: 'json',
-            success: function(){
-        swal("Seçilen ürün id:!"+ id , "Seçiminizi Yaptınız!", "success");
-            }
-        });
-    }
+    <script>
+        function showproductid(value){
+               var id = value;
+               $.ajax({
+                   type:'post',
+                   url:"/Menu/AddBasket/" + id,
+                   data:{ProductId:id},
+                   contentType: 'json',
+                   success: function(){
+               swal("Seçilen ürün id:!"+ id , "Seçtiğiniz Ürün Sepete Eklendi!", "success");
+                   }
+               });
+           }
+
+
+
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
