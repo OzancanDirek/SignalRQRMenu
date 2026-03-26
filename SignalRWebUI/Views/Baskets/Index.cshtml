@@ -2,6 +2,16 @@
 @{
     Layout = null;
     int count = 0;
+    decimal basketTotalPrice = 0;
+    decimal basketTotalPriceWithTax = 0;
+    decimal tax = 0;
+
+    if (Model != null && Model.Count > 0)
+    {
+        basketTotalPrice = Model.Sum(x => x.Price);
+        tax = basketTotalPrice / 100 * 10;
+        basketTotalPriceWithTax = basketTotalPrice + tax;
+    }
 }
 
 <!DOCTYPE html>
@@ -38,7 +48,6 @@
         min-height: 100vh;
     }
 
-    /* Breadcrumb */
     .basket-breadcrumb {
         display: flex;
         align-items: center;
@@ -67,7 +76,6 @@
             color: var(--text);
         }
 
-    /* Page title */
     .basket-page-title {
         font-family: 'Playfair Display', serif;
         font-size: clamp(28px, 4vw, 42px);
@@ -81,7 +89,6 @@
             color: var(--gold);
         }
 
-    /* Layout */
     .basket-wrapper {
         display: grid;
         grid-template-columns: 1fr 360px;
@@ -96,7 +103,6 @@
         }
     }
 
-    /* Table */
     .basket-table-wrap {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -210,7 +216,6 @@
             border-color: var(--danger);
         }
 
-    /* Empty state */
     .basket-empty {
         padding: 64px 20px;
         text-align: center;
@@ -227,7 +232,6 @@
             font-size: 14px;
         }
 
-    /* Sidebar */
     .basket-sidebar {
         display: flex;
         flex-direction: column;
@@ -235,7 +239,6 @@
         animation: sideIn .4s .1s ease both;
     }
 
-    /* Coupon card */
     .coupon-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -297,7 +300,6 @@
                 opacity: .85;
             }
 
-    /* Summary card */
     .summary-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -474,7 +476,7 @@
                                     <td class="td-name">@item.ProductName</td>
                                     <td class="td-qty"><span class="qty-badge">@item.Count</span></td>
                                     <td class="td-price">@item.Price ₺</td>
-                                    <td class="td-total">@item.TotalPrice ₺</td>
+                                    <td class="td-total">@(item.Price* item.Count) ₺</td>
                                     <td>
                                         <button data-basketid="@item.BasketId" class="btn-delete">
                                             <i class="fa fa-times"></i>
@@ -510,11 +512,11 @@
                     <div id="container">
                         <div class="summary-row">
                             <span class="lbl">Ara Toplam</span>
-                            <span class="val"><span id="totalprice">200</span> ₺</span>
+                            <span class="val"><span id="totalprice">@basketTotalPrice</span> ₺</span>
                         </div>
                         <div class="summary-row">
-                            <span class="lbl">KDV</span>
-                            <span class="val gold"><span id="kdv">20</span> ₺</span>
+                            <span class="lbl">KDV (%10)</span>
+                            <span class="val gold"><span id="kdv">@tax</span> ₺</span>
                         </div>
                     </div>
 
@@ -522,7 +524,7 @@
 
                     <div class="summary-total-row">
                         <span class="tot-lbl">Genel Toplam</span>
-                        <span class="tot-val"><span id="totalpricewithkdv">220</span> ₺</span>
+                        <span class="tot-val"><span id="totalpricewithkdv">@basketTotalPriceWithTax</span> ₺</span>
                     </div>
 
                     <button id="btnchecked">Sipariş Ver</button>
@@ -534,6 +536,32 @@
 
     @await Component.InvokeAsync("_UILayoutFooterComponentPartial")
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
+    <script>
+        $(document).ready(function () {
 
+            $(".btn-delete").click(function () {
+
+                var id = $(this).data("basketid");
+
+                if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Baskets/DeleteBasket/" + id,
+                        success: function () {
+                            alert("Ürün silindi");
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("Silme işlemi başarısız!");
+                        }
+                    });
+
+                }
+
+            });
+
+        });
+    </script>
 </body>
 </html>
