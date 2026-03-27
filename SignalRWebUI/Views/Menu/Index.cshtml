@@ -33,7 +33,6 @@
                 <h2>Our Menu</h2>
             </div>
 
-            <!-- FILTER MENU -->
             <ul class="filters_menu">
                 <li class="active" data-filter="*">Hepsi</li>
                 <li data-filter=".burger">Burger</li>
@@ -42,14 +41,11 @@
                 <li data-filter=".icecek">İçecek</li>
             </ul>
 
-            <!-- PRODUCTS -->
             <div class="filters-content">
                 <div class="row grid">
 
                     @foreach (var item in Model)
                     {
-                        
-                        
                         <div class="col-sm-6 col-lg-4 all @GetCategoryClass(item.CategoryName)">
                             <div class="box">
                                 <div>
@@ -116,7 +112,6 @@
         filterButtons.forEach(btn => {
             btn.addEventListener('click', function () {
 
-                // aktif class
                 filterButtons.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
 
