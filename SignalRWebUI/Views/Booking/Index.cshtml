@@ -3,9 +3,60 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
 
 <div class="content">
 	<div class="container-fluid">
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var connection = new signalR.HubConnectionBuilder()
+					.withUrl("https://localhost:7105/SignalRHub")
+					.build();
+
+				$("#connstatus").text(connection.state);
+
+				connection.start()
+					.then(function () {
+						$("#connstatus").text(connection.state);
+						setInterval(() => {
+							connection.invoke("GetBookingList");
+						}, 10000);
+					})
+					.catch(function (err) {
+						console.log(err);
+					});
+
+				connection.on("ReceiveBookingList", (value) => {
+					console.log(value);
+
+					var tbody = $("table tbody");
+					tbody.empty();
+
+					$.each(value, function (index, item) {
+						var row = `
+							<tr>
+								<td>${item.bookingId}</td>
+								<td>${item.name}</td>
+								<td>${item.phone}</td>
+								<td>${item.mail}</td>
+								<td>${item.personCount}</td>
+								<td><a href="/Booking/DeleteBooking/${item.bookingId}" class="btn btn-outline-danger">Sil</a></td>
+								<td><a href="/Booking/UpdateBooking/${item.bookingId}" class="btn btn-outline-success">Güncelle</a></td>
+							</tr>`;
+						tbody.append(row);
+					});
+				});
+			});
+		</script>
+
+
+
+
 		<h4 class="page-title">Randevu İşlemleri</h4>
 		<div class="row">
 			<div class="col-md-12">
