@@ -1,0 +1,266 @@
+﻿@model List<ResultMenuTable>
+@{
+    ViewData["Title"] = "TableListByStatus";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<style>
+    .masa-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        margin-bottom: 1.5rem;
+    }
+
+        .masa-header h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+        }
+
+    .conn-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+        .conn-badge.connected {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .conn-badge.disconnected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+    .conn-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+        animation: pulse-dot 1.5s infinite;
+    }
+
+    @@keyframes pulse-dot {
+        0%, 100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    .summary-row {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 1.5rem;
+    }
+
+    .summary-card {
+        flex: 1;
+        background: #f9fafb;
+        border-radius: 10px;
+        padding: 14px 16px;
+    }
+
+        .summary-card .s-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .summary-card .s-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .summary-card .s-sub {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+    .tables-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 14px;
+    }
+
+    .masa-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+        .masa-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border-color: #d1d5db;
+        }
+
+        .masa-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .masa-card.dolu::before {
+            background: #10b981;
+        }
+
+        .masa-card.bos::before {
+            background: #ef4444;
+        }
+
+    .masa-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        position: absolute;
+        top: 16px;
+        right: 16px;
+    }
+
+    .masa-card.dolu .masa-dot {
+        background: #10b981;
+    }
+
+    .masa-card.bos .masa-dot {
+        background: #ef4444;
+        animation: pulse-dot 2s infinite;
+    }
+
+    .masa-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+        font-size: 20px;
+    }
+
+    .masa-card.dolu .masa-icon {
+        background: #dcfce7;
+    }
+
+    .masa-card.bos .masa-icon {
+        background: #fee2e2;
+    }
+
+    .masa-name {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 4px;
+    }
+
+    .masa-status {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .masa-card.dolu .masa-status {
+        color: #065f46;
+    }
+
+    .masa-card.bos .masa-status {
+        color: #991b1b;
+    }
+</style>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="masa-header">
+            <h4>Anlık Masa Durumları</h4>
+            <span class="conn-badge disconnected" id="connstatus">
+                <span class="conn-dot"></span> Bağlanıyor...
+            </span>
+        </div>
+
+        <div class="summary-row">
+            <div class="summary-card">
+                <div class="s-label">Toplam Masa</div>
+                <div class="s-value" id="total-count">—</div>
+                <div class="s-sub">tüm masalar</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-label">Dolu</div>
+                <div class="s-value" id="dolu-count" style="color:#065f46;">—</div>
+                <div class="s-sub">aktif masa</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-label">Boş</div>
+                <div class="s-value" id="bos-count" style="color:#991b1b;">—</div>
+                <div class="s-sub">müsait masa</div>
+            </div>
+        </div>
+
+        <div class="tables-grid" id="statuslist"></div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:7105/SignalRHub")
+            .build();
+
+        connection.start().then(() => {
+            $("#connstatus")
+                .removeClass("disconnected")
+                .addClass("connected")
+                .html('<span class="conn-dot"></span> Bağlı');
+
+            setInterval(() => {
+                connection.invoke("GetMenuTableStatus");
+            }, 1000);
+        }).catch((err) => { console.log(err); });
+
+        connection.on("ReceiveMenuTableStatus", (value) => {
+            let dolu = 0, bos = 0;
+            let html = '';
+
+            $.each(value, (index, item) => {
+                const isDolu = item.status === true;
+                if (isDolu) dolu++; else bos++;
+
+                html += `
+                    <div class="masa-card ${isDolu ? 'dolu' : 'bos'}">
+                        <div class="masa-dot"></div>
+                        <div class="masa-icon">🪑</div>
+                        <div class="masa-name">${item.name}</div>
+                        <div class="masa-status">${isDolu ? 'Dolu' : 'Boş'}</div>
+                    </div>`;
+            });
+
+            $("#statuslist").html(html);
+            $("#total-count").text(value.length);
+            $("#dolu-count").text(dolu);
+            $("#bos-count").text(bos);
+        });
+    });
+</script>
