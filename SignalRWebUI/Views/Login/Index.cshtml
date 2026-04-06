@@ -1,0 +1,79 @@
+﻿@model LoginDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Restourant Giriş</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/colorlib-regform-32/css/nunito-font.css">
+    <link rel="stylesheet" href="~/colorlib-regform-32/css/style.css" />
+    <style>
+        html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #1a9fd4, #0a2a6e);
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+            body.form-v6 {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(to right, #1a9fd4, #0a2a6e);
+            }
+
+        .page-content {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-left {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .form-left img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+    </style>
+</head>
+<body class="form-v6">
+    <div class="page-content">
+        <div class="form-v6-content">
+            <div class="form-left">
+                <img src="~/colorlib-regform-32/images/food.jpg" alt="form">
+            </div>
+            <form class="form-detail" method="post">
+                <h2>Kullanıcı Giriş Formu</h2>
+                <div class="form-row">
+                    <input type="text" id="full-name" class="input-text" placeholder="Kullanıcı adınız" required asp-for="Username">
+                </div>
+
+                <div class="form-row">
+                    <input type="password" id="password" class="input-text" placeholder="Şifreniz" required asp-for="Password">
+                </div>
+                <div class="form-row-last">
+                    <input type="submit" class="register" value="Giriş Yap">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
