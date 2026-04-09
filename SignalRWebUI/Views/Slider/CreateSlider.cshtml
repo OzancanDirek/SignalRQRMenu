@@ -1,6 +1,6 @@
-﻿@model UpdateFeatureDto
+﻿@model CreateSliderDto
 @{
-    ViewData["Title"] = "UpdateFeature";
+    ViewData["Title"] = "CreateFeature";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
@@ -19,7 +19,6 @@
                                 Öne Çıkarılanlar ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
                             </div>
                         </div>
-                        <input type="hidden" asp-for="FeatureId" />
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="Title1">1. Başlığı Giriniz</label>
@@ -62,7 +61,7 @@
                         </div>
 
                         <div class="card-action">
-                            <button type="submit" class="btn btn-primary">Öne Çıkarılanı Güncelle</button>
+                            <button type="submit" class="btn btn-primary">Öne Çıkarılanı Ekle</button>
                         </div>
                     </div>
                 </form>
@@ -70,4 +69,3 @@
         </div>
     </div>
 </div>
-

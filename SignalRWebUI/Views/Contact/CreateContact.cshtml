@@ -39,17 +39,45 @@
                                 <input asp-for="Mail" type="text" class="form-control" placeholder="Mail bilginizi giriniz">
                             </div>
 
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="Description">Açıklama</label>
-                                <input asp-for="FooterDescription" type="text" class="form-control" placeholder="Açıklama bilgisini giriniz">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="ImageUrl">Alt Başlık</label>
+                                    <input asp-for="FooterTitle" type="text" class="form-control" placeholder="Alt Başlık giriniz">
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="Description">Açık Günler</label>
+                                    <input asp-for="OpenDays" type="text" class="form-control" placeholder="Açık Günlerin bilgisini giriniz">
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="Description">Açık Günler Açıklaması</label>
+                                    <input asp-for="OpenDaysDescription" type="text" class="form-control" placeholder="Açık Günlerin Açıklama bilgisini giriniz">
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="Description">Açık Saatler</label>
+                                    <input asp-for="OpenHours" type="text" class="form-control" placeholder="Açık Saatlerin bilgisini giriniz">
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="Description">Alt Açıklama Alanı</label>
+                                    <input asp-for="FooterDescription" type="text" class="form-control" placeholder="Alt Başlık Açıklama bilgisini giriniz">
+                                </div>
+                            </div>
+
+                            <div class="card-action">
+                                <button type="submit" class="btn btn-primary">İletişim Alanı Ekle</button>
                             </div>
                         </div>
-
-                        <div class="card-action">
-                            <button type="submit" class="btn btn-primary">İletişim Alanı Ekle</button>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
