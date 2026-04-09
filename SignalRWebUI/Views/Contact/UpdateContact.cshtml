@@ -3,49 +3,80 @@
     ViewData["Title"] = "UpdateContact";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
+
 <div class="content">
     <div class="container-fluid">
         <h4 class="page-title">İletişim İşlemleri</h4>
+
         <div class="row">
             <div class="col-md-12">
+
                 <form method="post">
                     <div class="card">
+
                         <div class="card-header">
-                            <div class="card-title">İletişim Alanını Güncellemek için Aşağıdaki Formu Doldurabilirsiniz.</div>
+                            <div class="card-title">
+                                İletişim Alanını Güncellemek için Aşağıdaki Formu Doldurabilirsiniz.
+                            </div>
                             <div class="card-sub">
                                 İletişim alanıyla ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
                             </div>
                         </div>
                         <div class="card-body">
+
                             <input type="hidden" asp-for="ContactId" />
+
                             <div class="form-group">
-                                <label for="Location">Konum</label>
+                                <label>Konum</label>
                                 <input asp-for="Location" type="text" class="form-control" placeholder="Yeni konumu giriniz">
                             </div>
-                        </div>
-                        <div class="card-body">
+
                             <div class="form-group">
-                                <label for="Phone">Telefon Numarası</label>
-                                <input asp-for="Phone" type="text" class="form-control" placeholder="Telefon numarası bilginizi giriniz">
+                                <label>Telefon Numarası</label>
+                                <input asp-for="Phone" type="text" class="form-control" placeholder="Telefon numarası giriniz">
                             </div>
-                        </div>
-                        <div class="card-body">
+
                             <div class="form-group">
-                                <label for="Mail">Mail</label>
-                                <input asp-for="Mail" type="text" class="form-control" placeholder="Mail bilginizi giriniz">
+                                <label>Mail</label>
+                                <input asp-for="Mail" type="text" class="form-control" placeholder="Mail giriniz">
                             </div>
-                        </div>
-                        <div class="card-body">
+
                             <div class="form-group">
-                                <label for="FooterDescription">Açıklama</label>
-                                <input asp-for="FooterDescription" type="text" class="form-control" placeholder="Açıklama bilgisini giriniz">
+                                <label>Alt Başlık</label>
+                                <input asp-for="FooterTitle" type="text" class="form-control" placeholder="Alt Başlık giriniz">
                             </div>
+
+                            <div class="form-group">
+                                <label>Açık Günler</label>
+                                <input asp-for="OpenDays" type="text" class="form-control" placeholder="Açık günleri giriniz">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Açık Günler Açıklaması</label>
+                                <input asp-for="OpenDaysDescription" type="text" class="form-control" placeholder="Açıklama giriniz">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Açık Saatler</label>
+                                <input asp-for="OpenHours" type="text" class="form-control" placeholder="Açık saatleri giriniz">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Açıklama</label>
+                                <input asp-for="FooterDescription" type="text" class="form-control" placeholder="Açıklama giriniz">
+                            </div>
+
                         </div>
+
                         <div class="card-action">
-                            <button type="submit" class="btn btn-primary">İletişim Alanını Güncelle</button>
+                            <button type="submit" class="btn btn-primary">
+                                İletişim Alanını Güncelle
+                            </button>
                         </div>
+
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
