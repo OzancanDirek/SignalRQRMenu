@@ -19,11 +19,18 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.23" />
+    <PackageReference Include="QRCoder" Version="1.8.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SignalR.DataAccessLayer\SignalR.DataAccessLayer.csproj" />
     <ProjectReference Include="..\SignalR.EntitytLayer\SignalR.EntitytLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="QRCoder">
+      <HintPath>..\..\..\QRCoder.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
