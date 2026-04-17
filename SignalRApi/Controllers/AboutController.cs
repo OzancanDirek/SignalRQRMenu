@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DtoLayer.AboutDto;
 using SignalR.EntityLayer.Entities;
@@ -8,28 +9,26 @@ using SignalR.EntityLayer.Entities;
 public class AboutController : ControllerBase
 {
     private readonly IAboutService _aboutService;
+    private readonly IMapper _mapper;
 
-    public AboutController(IAboutService aboutService)
+    public AboutController(IAboutService aboutService, IMapper mapper)
     {
         _aboutService = aboutService;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult AboutList()
     {
         var values = _aboutService.TGetListAll();
-        return Ok(values);
+        return Ok(_mapper.Map<List<ResultAboutDto>>(values));
     }
 
     [HttpPost]
     public IActionResult CreateAbout(CreateAboutDto createAboutDto)
     {
-        _aboutService.TAdd(new About
-        {
-            ImageUrl = createAboutDto.ImageUrl,
-            Title = createAboutDto.Title,
-            Description = createAboutDto.Description
-        });
+        var value = _mapper.Map<About>(createAboutDto);
+        _aboutService.TAdd(value);
         return Ok("Hakkında kısmı başarıyla oluşturuldu");
     }
 
@@ -45,19 +44,14 @@ public class AboutController : ControllerBase
     public IActionResult GetAbout(int id)
     {
         var value = _aboutService.TGetById(id);
-        return Ok(value);
+        return Ok(_mapper.Map<GetAboutDto>(value));
     }
 
     [HttpPut]
     public IActionResult UpdateAbout(UpdateAboutDto updateAboutDto)
     {
-        _aboutService.TUpdate(new About
-        {
-            AboutId = updateAboutDto.AboutId,
-            ImageUrl = updateAboutDto.ImageUrl,
-            Title = updateAboutDto.Title,
-            Description = updateAboutDto.Description
-        });
+        var value = _mapper.Map<About>(updateAboutDto);
+        _aboutService.TUpdate(value);
         return Ok("Hakkında kısmı başarıyla güncellendi");
     }
 }

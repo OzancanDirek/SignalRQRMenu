@@ -31,15 +31,8 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateProduct(CreateProductDto createProductDto)
         {
-            _ProductService.TAdd(new Product
-            {
-                ProductName = createProductDto.ProductName,
-                Description = createProductDto.Description,
-                Price = createProductDto.Price,
-                ImageUrl = createProductDto.ImageUrl,
-                ProductStatus = createProductDto.ProductStatus,
-                CategoryId = createProductDto.CategoryId
-            });
+            var values = _mapper.Map<Product>(createProductDto);
+            _ProductService.TAdd(values);
             return Ok("Ürün Bilgisi eklendi");
         }
 
@@ -55,22 +48,14 @@ namespace SignalRApi.Controllers
         public IActionResult GetProduct(int id)
         {
             var value = _ProductService.TGetById(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetProductDto>(value));
         }
 
         [HttpPut]
         public IActionResult UpdateProduct(UpdateProductDto updateProductDto)
         {
-            _ProductService.TUpdate(new Product
-            {
-                ProductId = updateProductDto.ProductId,
-                ProductName = updateProductDto.ProductName,
-                Description = updateProductDto.Description,
-                Price = updateProductDto.Price,
-                ImageUrl = updateProductDto.ImageUrl,
-                ProductStatus = updateProductDto.ProductStatus,
-                CategoryId = updateProductDto.CategoryId
-            });
+            var values = _mapper.Map<Product>(updateProductDto);
+            _ProductService.TAdd(values);
             return Ok("Ürün Bilgisi güncellendi");
         }
 
@@ -119,9 +104,8 @@ namespace SignalRApi.Controllers
         public IActionResult TProductNameByMinPrice()
         {
             return Ok(_ProductService.TProductNameByMinPrice());
-
-
         }
+
         [HttpGet("ProductNameByMaxPrice")]
         public IActionResult ProductNameByMaxPrice()
         {
@@ -151,6 +135,5 @@ namespace SignalRApi.Controllers
         {
             return Ok(_ProductService.TTotalPriceBySaladCategory());
         }
-
     }
 }
