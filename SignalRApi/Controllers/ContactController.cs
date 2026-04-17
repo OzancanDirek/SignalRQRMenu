@@ -29,17 +29,8 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateContact(CreateContactDto createContactDto)
         {
-            _ContactService.TAdd(new Contact
-            {
-                Mail = createContactDto.Mail,
-                Location = createContactDto.Location,
-                Phone = createContactDto.Phone,
-                FooterDescription = createContactDto.FooterDescription,
-                FooterTitle = createContactDto.FooterTitle,
-                OpenDays = createContactDto.OpenDays,
-                OpenDaysDescription = createContactDto.OpenDaysDescription,
-                OpenHours = createContactDto.OpenHours
-            });
+            var value = _mapper.Map<Contact>(createContactDto);
+            _ContactService.TAdd(value);
             return Ok("İletişim bilgileri eklendi");
         }
 
@@ -55,24 +46,14 @@ namespace SignalRApi.Controllers
         public IActionResult GetContact(int id)
         {
             var value = _ContactService.TGetById(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetContactDto>(value));
         }
 
         [HttpPut]
         public IActionResult UpdateContact(UpdateContactDto updateContactDto)
         {
-            _ContactService.TUpdate(new Contact
-            {
-                ContactId = updateContactDto.ContactId,
-                Mail = updateContactDto.Mail,
-                Location = updateContactDto.Location,
-                Phone = updateContactDto.Phone,
-                FooterDescription = updateContactDto.FooterDescription,
-                FooterTitle = updateContactDto.FooterTitle,
-                OpenDays = updateContactDto.OpenDays,
-                OpenDaysDescription = updateContactDto.OpenDaysDescription,
-                OpenHours = updateContactDto.OpenHours
-            });
+            var value = _mapper.Map<Contact>(updateContactDto);
+            _ContactService.TUpdate(value);
             return Ok("İletişim bilgileri güncellendi");
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DtoLayer.MessageDto;
@@ -12,33 +13,28 @@ namespace SignalRApi.Controllers
     public class MessageController : ControllerBase
     {
         private readonly IMessageService _MessageService;
+        private readonly IMapper _mapper;
 
-        public MessageController(IMessageService MessageService)
+        public MessageController(IMessageService MessageService, IMapper mapper)
         {
             _MessageService = MessageService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult MessageList()
         {
             var values = _MessageService.TGetListAll();
-            return Ok(values);
+            return Ok(_mapper.Map<List<ResultMessageDto>>(values));
         }
 
         [HttpPost]
         public IActionResult CreateMessage(CreateMessageDto createMessageDto)
         {
-            Message message = new Message
-            {
-                Mail = createMessageDto.Mail,
-                NameSurname = createMessageDto.NameSurname,
-                Phone = createMessageDto.Phone,
-                Subject = createMessageDto.Subject,
-                MessageContent = createMessageDto.MessageContent,
-                MessageSendDate = createMessageDto.MessageSendDate,
-                Status = false
-            };
-            _MessageService.TAdd(message);
+            createMessageDto.Status = false;
+            createMessageDto.MessageSendDate = DateTime.Now;
+            var value = _mapper.Map<Message>(createMessageDto);
+            _MessageService.TAdd(value);
             return Ok("Mesaj başarıyla gönderildi");
         }
 
@@ -60,17 +56,8 @@ namespace SignalRApi.Controllers
         [HttpPut]
         public IActionResult UpdateMessage(UpdateMessageDto updateMessageDto)
         {
-            _MessageService.TUpdate(new Message
-            {
-                Mail = updateMessageDto.Mail,
-                NameSurname = updateMessageDto.NameSurname,
-                Phone = updateMessageDto.Phone,
-                Subject = updateMessageDto.Subject,
-                MessageContent = updateMessageDto.MessageContent,
-                MessageSendDate = updateMessageDto.MessageSendDate,
-                Status = false,
-                MessageID = updateMessageDto.MessageID
-            });
+            var value = _mapper.Map<Message>(updateMessageDto);
+            _MessageService.TUpdate(value);
             return Ok("Mesaj başarıyla güncellendi");
         }
     }

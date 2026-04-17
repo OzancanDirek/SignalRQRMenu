@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DtoLayer.MenuTableDto;
 using SignalR.EntitytLayer.Entities;
@@ -10,10 +11,12 @@ namespace SignalRApi.Controllers
     public class MenuTablesController : ControllerBase
     {
         private readonly IMenuTableService _menuTableService;
+        private readonly IMapper _mapper;
 
-        public MenuTablesController(IMenuTableService menuTableService)
+        public MenuTablesController(IMenuTableService menuTableService, IMapper mapper)
         {
             _menuTableService = menuTableService;
+            _mapper = mapper;
         }
 
         [HttpGet("TableCount")]
@@ -26,18 +29,15 @@ namespace SignalRApi.Controllers
         public IActionResult MenuTableList()
         {
             var values = _menuTableService.TGetListAll();
-            return Ok(values);
+            return Ok(_mapper.Map<List<ResultMenuTableDto>>(values));
         }
 
         [HttpPost]
         public IActionResult CreateMenuTable(CreateMenuTableDto createMenuTableDto)
         {
-            MenuTable menuTable = new MenuTable
-            {
-                Name = createMenuTableDto.Name,
-                Status = false
-            };
-            _menuTableService.TAdd(menuTable);
+            createMenuTableDto.Status = false;
+            var value = _mapper.Map<MenuTable>(createMenuTableDto);
+            _menuTableService.TAdd(value);
             return Ok("Masa başarıyla oluşturuldu");
         }
 
@@ -59,13 +59,8 @@ namespace SignalRApi.Controllers
         [HttpPut]
         public IActionResult UpdateMenuTable(UpdateMenuTableDto updateMenuTableDto)
         {
-            MenuTable menuTable = new MenuTable
-            {
-                Name = updateMenuTableDto.Name,
-                Status = false,
-                MenuTableID = updateMenuTableDto.MenuTableID
-            };
-            _menuTableService.TUpdate(menuTable);
+            var value = _mapper.Map<MenuTable>(updateMenuTableDto);
+            _menuTableService.TUpdate(value);
             return Ok("Masa bilgileri başarıyla güncellendi");
         }
     }
