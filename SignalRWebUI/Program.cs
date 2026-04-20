@@ -1,22 +1,28 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using SignalR.DataAccessLayer.Concrete;
 using SignalR.EntitytLayer.Entities;
+using SignalRWebUI.ValidationRules;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var requeireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
 // Add services to the container.
-builder.Services.AddDbContext<SignalRContext>();    
+builder.Services.AddDbContext<SignalRContext>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<SignalRContext>();
-    
+
 builder.Services.AddHttpClient();
 
-builder.Services.AddControllersWithViews(opt=>
+builder.Services.AddControllersWithViews(opt =>
 {
     opt.Filters.Add(new AuthorizeFilter(requeireAuthorizePolicy));
+})
+.AddFluentValidation(x =>
+{
+    x.RegisterValidatorsFromAssemblyContaining<CreateBookingValidation>();
+    x.AutomaticValidationEnabled = true;
 });
 
 builder.Services.ConfigureApplicationCookie(opt =>
@@ -28,7 +34,7 @@ var app = builder.Build();
 
 app.UseStatusCodePages(async x =>
 {
-    if(x.HttpContext.Response.StatusCode == 404)
+    if (x.HttpContext.Response.StatusCode == 404)
     {
         x.HttpContext.Response.Redirect("/Error/NotFound404Page/");
     }
